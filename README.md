@@ -42,3 +42,10 @@ HTML/CSS/JS static + IndexedDB + Service Worker. Fără server sau dependențe e
 ## Prompt pentru conținut nou fără duplicate
 
 > Generează [N] materiale pentru AlgoPath v2, domeniul [Java/Spring/Hibernate/SQL/Algoritmi], subiectele [..], nivel [easy/medium/hard], în română. Folosește formatul JSON `schemaVersion=2.0`, `packId`, `packVersion`, `items`, conform exemplului din README. Pentru quiz, EXACT trei opțiuni și un singur `correctOptionId`, cu `shortExplanation` și `detailedExplanation`; pentru algoritm, `statement`, `input`, `output`, `hints`, `simpleSolution`, `optimalCode`, `explanation`, `complexity`, `steps`. Compară ID-ul, întrebarea și conceptele cu **manifestul exportat din Setări → Export manifest anti-duplicate**, pe care îl atașez. Nu crea reformulări care testează exact același fapt; validează JSON și verifică factual răspunsurile. Dacă manifestul lipsește, nu pretinde că ai verificat lipsa duplicatelor.
+
+## Actualizare v2.1 – întrebări și afișare Java
+- Codul Java este afișat cu indentare automată pe blocuri `{}`, instrucțiuni `;`, numere de linie, font ajustabil, wrap/scroll și ecran complet. Formatarea este pentru afișare; la expresii Java complexe, verifică și codul original dacă este necesar.
+- Întrebările au `Sari peste` (nu marchează răspunsul), `Următoarea întrebare`, filtre `Toate`, `Doar nerăspunse`, `Ultimul răspuns greșit`, `Ultimul răspuns corect` în Bibliotecă și buton pentru începerea listei filtrate.
+- La răspuns, progresul se salvează în IndexedDB; întrebările greșite pot fi repetate. Dacă o întrebare este ulterior rezolvată corect, nu mai apare în filtrul „Ultimul răspuns greșit”.
+- `Setări → Resetarea progresului` permite resetarea unei categorii sau a întregului progres, cu confirmare. Materialele și favoritele sunt păstrate; istoricul accesării materialelor resetate este eliminat.
+- Am mărit versiunea cache-ului Service Worker; după publicare, deschide aplicația conectat la internet și apoi redeschide-o pentru a activa noua versiune. Exportă un backup înainte de actualizare.
