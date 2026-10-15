@@ -1,21 +1,44 @@
-# AlgoPath – aplicație PWA Android (offline)
+# AlgoPath v2 — PWA offline pentru Android
 
-## Pornire pe calculator
+## Publicare pe GitHub Pages
 
-În directorul aplicației rulează `python -m http.server 8080`, apoi deschide `http://localhost:8080/`. Nu deschide `index.html` direct ca fișier pentru testarea PWA.
+1. Dezarhivează `algopath-v2-github-pages.zip`.
+2. Creează un repository **public** pe GitHub, de exemplu `algopath`.
+3. Intră în repository → **Add file** → **Upload files** și încarcă **conținutul folderului** (nu folderul și nu ZIP-ul). `index.html` trebuie să fie în rădăcina repo-ului.
+4. **Settings → Pages → Build and deployment → Deploy from a branch → main → / (root) → Save**.
+5. După publicare deschide `https://UTILIZATOR.github.io/algopath/` în Chrome Android.
+6. Instalează prin meniul Chrome, intră o dată online și testează în modul avion. La actualizări importante, fă backup înainte de a înlocui fișierele repo-ului.
 
-## Instalare pe Android
+## Cum imporți materiale noi
 
-Publică **toate fișierele**, păstrând structura, pe un hosting static **HTTPS** (de exemplu GitHub Pages sau Netlify). Deschide adresa în Chrome pe Android, așteaptă prima încărcare, apoi folosește meniul browserului → `Instalează aplicația` / `Adaugă pe ecranul principal`. După prima încărcare online, verifică funcționarea în modul avion. Nu există server sau cont pentru a utiliza aplicația după instalare.
+În **Setări → Import materiale JSON**, lipește un obiect, o listă de obiecte sau un pachet cu `items`; apoi **Previzualizează importul** și **Salvează**. Detectarea duplicatelor este bazată pe ID și text exact normalizat, nu garantat semantic. Pentru importuri voluminoase se afișează primele 100 de intrări în previzualizare, iar totalurile privesc pachetul complet.
 
-## Import de lecții de aici
+Exemplu:
 
-Cere o lecție în *format AlgoPath JSON*, copiază întregul obiect JSON, deschide `Adaugă exerciții`, lipește și apasă `Importă din text`. Sau transferă un fișier `.json` pe Android și importă-l cu selectorul de fișiere. Acceptă și un array JSON cu mai multe lecții. Folosește „Copiază promptul” pentru a genera exerciții noi într-un format compatibil.
+```json
+{"schemaVersion":"2.0","packId":"my-java-pack","packVersion":1,"items":[{"id":"java-q-custom-001","version":1,"type":"quiz","title":"Exemplu HashMap","categories":["Java","Collections"],"difficulty":"easy","content":{"question":"Ce întoarce HashMap.get pentru o cheie absentă?","options":[{"id":"a","text":"null"},{"id":"b","text":"false"},{"id":"c","text":"aruncă mereu o excepție"}],"correctOptionId":"a","shortExplanation":"Returnează null.","detailedExplanation":"Pentru a distinge cheia absentă de o valoare null, folosește containsKey."}}]}
+```
 
-## Date, backup și limitări
+## Backup și restaurare
 
-Progresul și exercițiile adăugate sunt salvate local cu `localStorage`. Poți exporta un backup și restaura. Ștergerea datelor browserului poate elimina progresul și lecțiile importate; exportă periodic backup. Aplicația afișează și explică cod Java, dar **nu îl compilează/execută pe telefon**. Cache-ul PWA poate fi șters de Android/browser în situații de lipsă de spațiu; pentru zbor testează modul avion înainte să pleci. La actualizarea fișierelor, schimbă versiunea `CACHE` din sw.js.
+- **Export backup complet** salvează materialele importate, progresul, categoriile, istoricul și setările.
+- **Combină backup** suprapune datele din backup cu cele existente când ID-urile coincid; pentru coliziuni sunt preferate datele din backup.
+- **Înlocuiește tot** șterge datele utilizatorului prezente și le înlocuiește cu cele din fișier. Solicită confirmare.
+- Colecția inițială (`content.json`) rămâne inclusă în aplicație, independent de backup.
 
-## Fișiere
+## Arhitectură și offline
 
-`index.html`, `styles.css`, `app.js`, `lessons.json`, `sw.js`, `manifest.webmanifest`, `icon-192.png`, `icon-512.png`.
+HTML/CSS/JS static + IndexedDB + Service Worker. Fără server sau dependențe externe; fișierele statice sunt păstrate în Cache Storage. Actualizarea se face prin schimbarea fișierelor de pe GitHub Pages și **modificarea identificatorului CACHE din `sw.js`**, pentru a descărca noile resurse. Datele locale din IndexedDB nu sunt șterse la actualizarea cache-ului.
+
+## Limite cunoscute, importante
+
+- Biblioteca conține **100 intrări algoritmi** pornite de la **20 de algoritmi de bază**, cu variante de studiu (nu 100 algoritmi distincți), plus **700 grile** pornite de la **235 concepte-fapt** cu reformulări. În total 800 intrări numerice solicitate, dar nu 800 subiecte independente. **Este o bibliotecă demonstrativă care are nevoie de extindere și revizuire editorială** înainte de pregătirea serioasă pentru interviuri.
+- Pașii de execuție ai algoritmilor sunt descriptivi, nu un debugger, iar diagramele interactive și animațiile reale pentru arbori/grafuri nu sunt încă implementate.
+- Nu există compilare Java în aplicație, nici editor de cod executabil.
+- Vizualizarea SQL/Java nu folosește în prezent syntax highlighting lexical; codul are afișare monospace, numere de linie și setări de dimensiune, wrap și ecran complet.
+- Nu există încă administrare completă (ștergerea/redenunirea/mutarea categoriilor pe item sau trasee editoriale personalizate). Poți crea categorii și importa materiale multicategorie.
+- Nu s-au efectuat teste E2E reușite într-un browser real sau pe Android, deoarece browserul automatizat a returnat `ERR_BLOCKED_BY_ADMINISTRATOR` pentru serverul local și URL-uri de test. Sunt necesare teste manuale după publicare.
+
+## Prompt pentru conținut nou fără duplicate
+
+> Generează [N] materiale pentru AlgoPath v2, domeniul [Java/Spring/Hibernate/SQL/Algoritmi], subiectele [..], nivel [easy/medium/hard], în română. Folosește formatul JSON `schemaVersion=2.0`, `packId`, `packVersion`, `items`, conform exemplului din README. Pentru quiz, EXACT trei opțiuni și un singur `correctOptionId`, cu `shortExplanation` și `detailedExplanation`; pentru algoritm, `statement`, `input`, `output`, `hints`, `simpleSolution`, `optimalCode`, `explanation`, `complexity`, `steps`. Compară ID-ul, întrebarea și conceptele cu **manifestul exportat din Setări → Export manifest anti-duplicate**, pe care îl atașez. Nu crea reformulări care testează exact același fapt; validează JSON și verifică factual răspunsurile. Dacă manifestul lipsește, nu pretinde că ai verificat lipsa duplicatelor.
