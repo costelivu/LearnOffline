@@ -53,3 +53,10 @@ HTML/CSS/JS static + IndexedDB + Service Worker. Fără server sau dependențe e
 
 ## Actualizare v2.2
 Codul Java este afisat pe randuri separate, cu indentare dupa acolade si delimitarea instructiunilor dupa `;`. Cache-ul offline are o versiune noua; reporneste aplicatia dupa actualizarea GitHub Pages.
+
+
+## Actualizare v2.3
+- Liniile Java sunt acum elemente `div` distincte, cu numerotare si indentare vizibila.
+- CSS stabileste explicit afișarea lor pe linii separate.
+- Resursele JS/CSS sunt versionate; service worker actualizat pentru a evita folosirea indefinita a vechilor fisiere din cache.
+- Pentru actualizare pe Android: deschide cu internet si reincarca, apoi inchide si redeschide aplicatia.

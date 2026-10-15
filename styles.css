@@ -7,3 +7,12 @@
 .code .code-line{display:flex!important;clear:both;min-height:1.7em;white-space:pre}
 .code .line-text{display:block;white-space:pre;min-width:0}
 .code.wrap .line-text{white-space:pre-wrap;overflow-wrap:anywhere}
+
+/* v2.3: line-by-line Java code display. Div rows enforce separate lines. */
+.code code { display:block; min-width:max-content; white-space:normal; }
+.code .code-line { display:block !important; white-space:pre; min-height:1.7em; }
+.code .line-no { display:inline-block; vertical-align:top; width:3.2em; position:static; box-sizing:border-box; }
+.code .line-text { display:inline; white-space:pre; }
+.code.wrap code { min-width:0; }
+.code.wrap .code-line { white-space:pre-wrap; overflow-wrap:anywhere; }
+.code.wrap .line-text { white-space:pre-wrap; overflow-wrap:anywhere; }
