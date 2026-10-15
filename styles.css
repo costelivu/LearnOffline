@@ -2,3 +2,8 @@
 
 /* v2.1: aligned Java code, stable line numbers */
 .code code{display:block;min-width:max-content}.code-line{display:flex;align-items:flex-start;white-space:pre}.line-no{position:sticky;left:0;flex:0 0 3.2em;text-align:right;padding-right:1em;margin-right:1em;user-select:none;color:#8290a9;border-right:1px solid #40506a;background:#0c1529}.line-text{white-space:pre;flex:1}.code.wrap code{min-width:0}.code.wrap .code-line{white-space:normal}.code.wrap .line-text{white-space:pre-wrap;overflow-wrap:anywhere;min-width:0}.code.full{overflow:auto}
+
+/* v2.2: each formatted Java instruction must occupy its own visual line. */
+.code .code-line{display:flex!important;clear:both;min-height:1.7em;white-space:pre}
+.code .line-text{display:block;white-space:pre;min-width:0}
+.code.wrap .line-text{white-space:pre-wrap;overflow-wrap:anywhere}

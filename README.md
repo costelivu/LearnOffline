@@ -49,3 +49,7 @@ HTML/CSS/JS static + IndexedDB + Service Worker. Fără server sau dependențe e
 - La răspuns, progresul se salvează în IndexedDB; întrebările greșite pot fi repetate. Dacă o întrebare este ulterior rezolvată corect, nu mai apare în filtrul „Ultimul răspuns greșit”.
 - `Setări → Resetarea progresului` permite resetarea unei categorii sau a întregului progres, cu confirmare. Materialele și favoritele sunt păstrate; istoricul accesării materialelor resetate este eliminat.
 - Am mărit versiunea cache-ului Service Worker; după publicare, deschide aplicația conectat la internet și apoi redeschide-o pentru a activa noua versiune. Exportă un backup înainte de actualizare.
+
+
+## Actualizare v2.2
+Codul Java este afisat pe randuri separate, cu indentare dupa acolade si delimitarea instructiunilor dupa `;`. Cache-ul offline are o versiune noua; reporneste aplicatia dupa actualizarea GitHub Pages.
