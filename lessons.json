@@ -1,0 +1,273 @@
+[
+  {
+    "id": "p01",
+    "title": "Suma cifrelor",
+    "category": "Calcule",
+    "level": 1,
+    "minutes": 8,
+    "statement": "Primești un întreg nenegativ n. Calculează suma tuturor cifrelor sale.",
+    "exampleInput": "n = 5832",
+    "exampleOutput": "18",
+    "explanation": "La fiecare pas, n % 10 furnizează ultima cifră, iar n / 10 o elimină. Pentru n = 0, rezultatul corect este 0.",
+    "hints": [
+      "Ce operație îți dă ultima cifră?",
+      "Cum elimini ultima cifră dintr-un int?",
+      "Repetă n % 10, apoi n /= 10 până n ajunge la zero."
+    ],
+    "steps": [
+      "5832 % 10 = 2, suma = 2",
+      "583 % 10 = 3, suma = 5",
+      "58 % 10 = 8, suma = 13",
+      "5 % 10 = 5, suma = 18"
+    ],
+    "java": "class Solution {\n    static int sumDigits(int n) {\n        int sum = 0;\n        while (n > 0) {\n            sum += n % 10;\n            n /= 10;\n        }\n        return sum;\n    }\n}",
+    "complexity": "O(d) timp, O(1) memorie, d = numărul de cifre.",
+    "mistakes": "Nu confunda % cu /. Verifică n = 0.",
+    "challenge": "Cum ai calcula produsul cifrelor?",
+    "source": "inclus"
+  },
+  {
+    "id": "p02",
+    "title": "Numără cifra 3",
+    "category": "Calcule",
+    "level": 1,
+    "minutes": 8,
+    "statement": "Numără aparițiile cifrei 3 într-un întreg nenegativ n.",
+    "exampleInput": "n = 30313",
+    "exampleOutput": "3",
+    "explanation": "Extragi cifrele succesiv și mărești un contor numai atunci când cifra curentă este 3.",
+    "hints": [
+      "Folosește ideea de la suma cifrelor.",
+      "Ce comparație faci pentru fiecare cifră?",
+      "Dacă n % 10 == 3, crește contorul."
+    ],
+    "steps": [
+      "Ultima cifră 3 → contor 1",
+      "Cifra 1 → contor 1",
+      "Cifra 3 → contor 2",
+      "Cifra 0 → contor 2",
+      "Cifra 3 → contor 3"
+    ],
+    "java": "class Solution {\n    static int countThrees(int n) {\n        int count = 0;\n        while (n > 0) {\n            if (n % 10 == 3) count++;\n            n /= 10;\n        }\n        return count;\n    }\n}",
+    "complexity": "O(d) timp, O(1) memorie.",
+    "mistakes": "Nu adăuga 1 pentru orice cifră. Pentru n = 0, rezultatul este 0.",
+    "challenge": "Numără aparițiile unei cifre k furnizate ca parametru (inclusiv cifra 0).",
+    "source": "inclus"
+  },
+  {
+    "id": "p03",
+    "title": "Este număr prim?",
+    "category": "Calcule",
+    "level": 2,
+    "minutes": 12,
+    "statement": "Returnează true dacă n este prim, altfel false. n este întreg și poate fi negativ.",
+    "exampleInput": "n = 29",
+    "exampleOutput": "true",
+    "explanation": "Un număr compus are cel puțin un divizor cel mult egal cu rădăcina pătrată din n. Verifică doar acel interval.",
+    "hints": [
+      "1 nu este prim.",
+      "Dacă n = a × b, unul dintre factori este ≤ √n.",
+      "Testează i de la 2 atât timp cât i <= n / i."
+    ],
+    "steps": [
+      "29 >= 2, continuăm",
+      "29 % 2 ≠ 0",
+      "29 % 3 ≠ 0",
+      "29 % 4 ≠ 0",
+      "5 > 29 / 5: ne oprim; true"
+    ],
+    "java": "class Solution {\n    static boolean isPrime(int n) {\n        if (n < 2) return false;\n        for (int i = 2; i <= n / i; i++) {\n            if (n % i == 0) return false;\n        }\n        return true;\n    }\n}",
+    "complexity": "O(√n) timp, O(1) memorie.",
+    "mistakes": "Nu trata 1 ca prim. i * i poate produce overflow pentru int mari.",
+    "challenge": "Câte numere prime se află între 1 și N?",
+    "source": "inclus"
+  },
+  {
+    "id": "p04",
+    "title": "Maximul și prima poziție",
+    "category": "Vectori",
+    "level": 2,
+    "minutes": 10,
+    "statement": "Primești un vector nevid. Returnează indexul primei apariții a valorii maxime (indexare de la 0).",
+    "exampleInput": "[4, 9, 2, 9, 5]",
+    "exampleOutput": "1",
+    "explanation": "Păstrează indexul celui mai mare element găsit. Actualizează numai la >, nu la >=, pentru a păstra prima apariție.",
+    "hints": [
+      "Inițializează candidatul cu elementul de pe poziția 0.",
+      "Compară fiecare element cu maximul curent.",
+      "Actualizează indexul numai când găsești o valoare strict mai mare."
+    ],
+    "steps": [
+      "Max = 4, poziția 0",
+      "Vedem 9 → max = 9, poziția 1",
+      "Vedem 2 → fără schimbare",
+      "Vedem 9 → fără schimbare",
+      "Răspuns: 1"
+    ],
+    "java": "class Solution {\n    static int firstMaxIndex(int[] a) {\n        if (a == null || a.length == 0)\n            throw new IllegalArgumentException(\"Vector gol\");\n        int best = 0;\n        for (int i = 1; i < a.length; i++) {\n            if (a[i] > a[best]) best = i;\n        }\n        return best;\n    }\n}",
+    "complexity": "O(n) timp, O(1) memorie.",
+    "mistakes": "Folosește >, nu >=. Un vector poate conține doar numere negative.",
+    "challenge": "Găsește indexul ultimei apariții a maximului.",
+    "source": "inclus"
+  },
+  {
+    "id": "p05",
+    "title": "Inversează vectorul",
+    "category": "Vectori",
+    "level": 2,
+    "minutes": 12,
+    "statement": "Inversează un vector de întregi pe loc, fără a aloca alt vector.",
+    "exampleInput": "[1, 2, 3, 4, 5]",
+    "exampleOutput": "[5, 4, 3, 2, 1]",
+    "explanation": "Folosește doi indici la capete; schimbă elementele și apropie indicii până când se întâlnesc.",
+    "hints": [
+      "Cum ai putea interschimba primul și ultimul element?",
+      "Folosește doi indici: stânga și dreapta.",
+      "După swap, mărește stânga și micșorează dreapta."
+    ],
+    "steps": [
+      "Schimbă 1 cu 5 → [5,2,3,4,1]",
+      "Schimbă 2 cu 4 → [5,4,3,2,1]",
+      "Indicii se întâlnesc; gata"
+    ],
+    "java": "class Solution {\n    static void reverse(int[] a) {\n        int left = 0, right = a.length - 1;\n        while (left < right) {\n            int tmp = a[left];\n            a[left] = a[right];\n            a[right] = tmp;\n            left++;\n            right--;\n        }\n    }\n}",
+    "complexity": "O(n) timp, O(1) memorie suplimentară.",
+    "mistakes": "Nu continua după ce indicii se intersectează. Verifică vectori cu 0/1 elemente.",
+    "challenge": "Inversează doar intervalul dintre doi indici.",
+    "source": "inclus"
+  },
+  {
+    "id": "p06",
+    "title": "Căutare binară",
+    "category": "Vectori",
+    "level": 3,
+    "minutes": 15,
+    "statement": "Într-un vector sortat crescător cu elemente DISTINCTE, caută valoarea target. Returnează indexul sau -1.",
+    "exampleInput": "[2, 4, 7, 11, 15], target = 11",
+    "exampleOutput": "3",
+    "explanation": "Într-un vector sortat poți elimina jumătate din interval la fiecare comparație. Indicii sunt incluși.",
+    "hints": [
+      "Ce îți permite faptul că vectorul este sortat?",
+      "Compară target cu elementul din mijloc.",
+      "Elimină jumătatea imposibilă; calculează mijlocul fără overflow."
+    ],
+    "steps": [
+      "left=0, right=4, mid=2 → 7",
+      "11 > 7 → left=3",
+      "left=3, right=4, mid=3 → 11",
+      "Găsit la indexul 3"
+    ],
+    "java": "class Solution {\n    static int binarySearch(int[] a, int target) {\n        int left = 0, right = a.length - 1;\n        while (left <= right) {\n            int mid = left + (right - left) / 2;\n            if (a[mid] == target) return mid;\n            if (a[mid] < target) left = mid + 1;\n            else right = mid - 1;\n        }\n        return -1;\n    }\n}",
+    "complexity": "O(log n) timp, O(1) memorie.",
+    "mistakes": "Funcționează doar pe date sortate; condiția este left <= right.",
+    "challenge": "Modifică algoritmul pentru prima apariție într-un vector cu duplicate.",
+    "source": "inclus"
+  },
+  {
+    "id": "p07",
+    "title": "Factorial recursiv",
+    "category": "Recursivitate",
+    "level": 2,
+    "minutes": 12,
+    "statement": "Calculează n! recursiv, pentru n între 0 și 20 inclusiv.",
+    "exampleInput": "n = 5",
+    "exampleOutput": "120",
+    "explanation": "O funcție recursivă are caz de bază și un apel pe o problemă mai mică. Folosește long pentru 20!.",
+    "hints": [
+      "Cât este 0!?",
+      "Cum exprimi n! folosind (n-1)!?",
+      "Returnează 1 pentru n <= 1, altfel n * factorial(n-1)."
+    ],
+    "steps": [
+      "factorial(5) = 5 × factorial(4)",
+      "factorial(4) = 4 × factorial(3)",
+      "Continuă până la factorial(1) = 1",
+      "La întoarcere: 1, 2, 6, 24, 120"
+    ],
+    "java": "class Solution {\n    static long factorial(int n) {\n        if (n < 0 || n > 20)\n            throw new IllegalArgumentException(\"n trebuie sa fie 0..20\");\n        if (n <= 1) return 1L;\n        return n * factorial(n - 1);\n    }\n}",
+    "complexity": "O(n) timp, O(n) memorie pe stiva apelurilor.",
+    "mistakes": "Fără caz de bază apare StackOverflowError. 21! depășește long.",
+    "challenge": "Scrie o versiune iterativă și compară memoria.",
+    "source": "inclus"
+  },
+  {
+    "id": "p08",
+    "title": "Suma recursivă a vectorului",
+    "category": "Recursivitate",
+    "level": 3,
+    "minutes": 15,
+    "statement": "Calculează suma elementelor unui vector de întregi folosind recursivitatea. Returnează long.",
+    "exampleInput": "[2, 4, 6, 8]",
+    "exampleOutput": "20",
+    "explanation": "Fiecare apel adună elementul curent cu rezultatul calculat pentru restul vectorului.",
+    "hints": [
+      "Care este suma unui vector gol?",
+      "Folosește un parametru index.",
+      "suma(i) = a[i] + suma(i + 1); pentru i == a.length returnează 0."
+    ],
+    "steps": [
+      "sum(0) = 2 + sum(1)",
+      "sum(1) = 4 + sum(2)",
+      "sum(2) = 6 + sum(3)",
+      "sum(3) = 8 + sum(4), sum(4) = 0",
+      "La întoarcere: 8, 14, 18, 20"
+    ],
+    "java": "class Solution {\n    static long sum(int[] a) {\n        return sumFrom(a, 0);\n    }\n    private static long sumFrom(int[] a, int i) {\n        if (i == a.length) return 0L;\n        return a[i] + sumFrom(a, i + 1);\n    }\n}",
+    "complexity": "O(n) timp, O(n) memorie pe stiva apelurilor.",
+    "mistakes": "Nu uita incrementarea indexului. Pentru vectori foarte mari, iterația evită depășirea stivei.",
+    "challenge": "Calculează recursiv numărul de valori pare.",
+    "source": "inclus"
+  },
+  {
+    "id": "p09",
+    "title": "Numărul de noduri",
+    "category": "Arbori binari",
+    "level": 3,
+    "minutes": 18,
+    "statement": "Primești rădăcina unui arbore binar. Returnează numărul total de noduri.",
+    "exampleInput": "8 cu copii 3 și 10; 3 cu copii 1 și 6",
+    "exampleOutput": "5",
+    "explanation": "Pentru fiecare nod aduni 1 pentru nodul curent, numărul de noduri din stânga și din dreapta. Arborele gol contribuie cu 0.",
+    "hints": [
+      "Ce rezultat dă un subarbore gol?",
+      "Poți calcula independent cele două ramuri.",
+      "count(node) = 1 + count(left) + count(right)."
+    ],
+    "steps": [
+      "count(1), count(6), count(10) = 1",
+      "count(3) = 1 + 1 + 1 = 3",
+      "count(8) = 1 + 3 + 1 = 5"
+    ],
+    "java": "class TreeNode {\n    int val;\n    TreeNode left, right;\n    TreeNode(int val) { this.val = val; }\n}\nclass Solution {\n    static int countNodes(TreeNode root) {\n        if (root == null) return 0;\n        return 1 + countNodes(root.left)\n                 + countNodes(root.right);\n    }\n}",
+    "complexity": "O(n) timp, O(h) memorie pentru recursivitate; h este înălțimea în noduri.",
+    "mistakes": "Nu număra nodurile null. Pentru un arbore degenerat, h = n.",
+    "challenge": "Numără doar frunzele unui arbore binar.",
+    "source": "inclus"
+  },
+  {
+    "id": "p10",
+    "title": "Înălțimea arborelui",
+    "category": "Arbori binari",
+    "level": 4,
+    "minutes": 20,
+    "statement": "Calculează înălțimea unui arbore binar ca numărul de noduri de pe cel mai lung drum de la rădăcină la o frunză. Arborele gol are înălțimea 0.",
+    "exampleInput": "8 cu copii 3 și 10; 3 cu copii 1 și 6",
+    "exampleOutput": "3",
+    "explanation": "Înălțimea unui nod este 1 plus maximul înălțimilor celor doi copii. Aceasta este o traversare DFS postordine.",
+    "hints": [
+      "Cât este înălțimea unui arbore gol?",
+      "Ai nevoie de maxim, nu de sumă.",
+      "height(node) = 1 + max(height(left), height(right))."
+    ],
+    "steps": [
+      "height(1), height(6), height(10) = 1",
+      "height(3) = 1 + max(1,1) = 2",
+      "height(8) = 1 + max(2,1) = 3"
+    ],
+    "java": "class TreeNode {\n    int val;\n    TreeNode left, right;\n    TreeNode(int val) { this.val = val; }\n}\nclass Solution {\n    static int height(TreeNode root) {\n        if (root == null) return 0;\n        return 1 + Math.max(height(root.left),\n                            height(root.right));\n    }\n}",
+    "complexity": "O(n) timp, O(h) memorie pentru stiva recursivă.",
+    "mistakes": "Nu confunda înălțimea în noduri cu cea în muchii.",
+    "challenge": "Calculează adâncimea minimă până la o frunză.",
+    "source": "inclus"
+  }
+]
